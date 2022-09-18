@@ -45,5 +45,12 @@
       <!-- scope 配置当前依赖的范围 -->
       <scope>test</scope>
     </dependency>
+    <!-- 以compile范围导入spring-core依赖，测试依赖的传递性 -->
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-core</artifactId>
+	    <version>4.0.0.RELEASE</version>
+    </dependency>
   </dependencies>
 </project>

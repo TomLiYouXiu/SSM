@@ -934,3 +934,697 @@ DANGER
 ![./images](data:image/png;base64,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)
 
 通过浏览器尝试访问：http://localhost:8080/pro-maven-web/index.jsp
+
+# 第九节 实验五：让 Web 工程依赖 Java 工程
+
+## 1、观念
+
+明确一个意识：从来只有 Web 工程依赖 Java 工程，没有反过来 Java 工程依赖 Web 工程。本质上来说，Web 工程依赖的 Java 工程其实就是 Web 工程里导入的 jar 包。最终 Java 工程会变成 jar 包，放在 Web 工程的 WEB-INF/lib 目录下。
+
+## 2、操作
+
+在 pro02-maven-web 工程的 pom.xml 中，找到 dependencies 标签，在 dependencies 标签中做如下配置：
+
+```xml
+<!-- 配置对Java工程pro01-maven-java的依赖 -->
+<!-- 具体的配置方式：在dependency标签内使用坐标实现依赖 -->
+<dependency>
+	<groupId>com.liyouxiu.maven</groupId>
+	<artifactId>pro_maven_java</artifactId>
+	<version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+## 3、在 Web 工程中，编写测试代码
+
+### ①补充创建目录
+
+pro_maven_web**\src\test\java\com\atguigu\maven**
+
+### ②确认 Web 工程依赖了 junit
+
+```xml
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+```
+
+### ③创建测试类
+
+把 Java 工程的 CalculatorTest.java 类复制到 pro02-maven-wb**\src\test\java\com\atguigu\maven** 目录下
+
+## 4、执行Maven命令
+
+### ①测试命令
+
+mvn test
+
+说明：测试操作中会提前自动执行编译操作，测试成功就说明编译也是成功的。
+
+### ②打包命令
+
+mvn package
+
+通过查看 war 包内的结构，我们看到被 Web 工程依赖的 Java 工程确实是会变成 Web 工程的 WEB-INF/lib 目录下的 jar 包。
+
+![./images](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAboAAABrCAIAAACOgNDsAAAUXklEQVR42u2de3AVVZ7HTwgyBpVHURoeog4LwWEhswo1Iq8FAuoAOqmBEiNiwIUgUAILMsLC4Mq7RsAAMyIBwcwyPByw2DXguCBhRmCAIawbXCoQdp3hOUhRPKKCDAn76z59zz39PvfaSd/L/X7+uHVv9+nT59Wf/p3THUg7duwYAwCkGF26dElLS6uqqgq7IMlBRUUFfabdunUr7JIAAOqaevXq0eelS5fCLkii07RpU/qsqalh0CUAqQnXJbcA8EBuKOgSgFQEulQEugQg1YEuFYEuAUh1oEtFoEsAUh3oUhHoEoBUB7pUBLoEINWBLhWBLkPg2rVrAwcOnDJlCn2GXRaQfAQ+flJWlxcvXnzyySc//vjjM2fODBo0qKSkpF27dh5tm1i6pNJ36tTp3LlzjRo1+vTTT7Ozs2njtm3bqCb0Rd6Y1ECXtQTGT3zYdTly5Ej6XLt2Lf+5ZMkSUgm1ZEZGhvi5efPmIUOGlJaW8jQtWrQ4cuRIs2bN6Nj33nuPb+zTp484ygIlo86aPHkyr05ZWZncO3TU4sWL6ZO+015xFo8M4yCJdclbjQpNLUgtMnr0aGp92j5hwoTVq1dTA4mN1CUhljOomtaqLmv1FImpe4yfuLHrUtiK2s2uM266sWPHOhZDeJDZtOuYjOdPnqqsrBQqtOiylgab0KUYEt5t66NLOpjaKCcnJz09PfCyWigvLx86dOiePXuo6I6Fprr16NFj06ZNyR4gxDfcY+qLBNElxk9tEPj4seuSGpNHW9RW3CkUPL788st0RsonLy9v9uzZboGYrEuKQ+n+pKLLcePGvf322/xux76DLmMacgHrkjLav39/27Ztn3vuOd/T8zNRK7z22ms0IaIt1Ny8fcX2hx9+mJrgm2++4ZMmJsXwtJ3Ce9GycqNz3KIDfhnMmDFj/PjxV69epZPSRj7/ohbnOVD39+zZk/byUvXt21dEIkyaa8gF48fyzIcPH075yxk6djyfDK5atYoyF/1tz9OtobybV70vxJyURSYvdN+Wq+/dKTRppY07d+7kt3o5Nyp/fn6+JXOPmRHGT1KMH7suZWvwhqUycPGJ21LDhg29demtHnuy1q1bUyOvX79erj6LUZcxDTl5Mi5Xyq1tfXRZXV29cePGEydOqJyeV7uiokIMXz46eQnEdj4mXn31VXEb4cmKi4vlG5FluPPxypvSXmdKyS+kXbt20SAeMWKEpV/nzZtH41WekVGbWvqja9euIvoQXUgbKXNqU56huOXKBRC3UMpt/vz5gwcPpmLz8pNc7Hnyi83eUN6TxDj6gg8y+m6vvmOn8AuVH8u7hq5Vt/KrjGCMn6QYP46PekSpqCRDhgwhl82aNWvDhg3URPy2xMsjVhV5o/GWj2Ptkg8nOumiRYvszSvO4ni/iXvIuenSrW391y5v3Ljx1ltvXb9+nWreq1cvxUtU/mm5uuRlETkZfXeLDqgR33jjDbF0YlnRb9WqlRhS8oTLMvmiTPhZeDxCX/he+sJbinqIxxQCHkzJ45VPQ+iMcgFEDnPmzMnNzSXpLF++/KWXXqKUp06dsudpWfRRn1vF3Rf26ltCA0uniJ9cH97lr6UyY/zU2fhx1CXJnfy4Zs0aXhKaevPCUw7ewaPc8vIisuUpnKMu+fcHH3yQBB332qX6kHPTpVvbBh9dxjHceTfQyLCsLvNDPFaLRZ29hzulocji9ddfp76RV7h4h/FM+PMBuWD2zEVRLdEB3z5p0iQx0Kmz6dLlt2J7nm4N5T0g4u4LHlhZqq+uS9/y10aZMX7qcvw46pKrhGK9wsJCKgkVgOpLp1i3bh2vgoouPdaL3ebsfLhSCfmTHxajLgOJLuPUZRxrT3Rn4ENTxNWWEtgnU/bbiNhITSZGZ9zDXb6QRKkoQ+oYKgblQFt4ejEhpY00+eIl9B3uvLJbtmzJysqiuvPvfErlmCdvEHtDeU+m4ugLS2PK1XfsFMfJuFv5VUYwxk9SjB+39y7JaA0aNGjfvr1o6nfeeYfCQ/6mQUzRpb1sHkucPJDnE3kWxtqlW9sG+WRcvBBQVFTEpDV4e3PITw9EMiYtqMvr95bJiH1V23e480d4fPlj2LBhZWVl8vNT0TTMtqJPe1WiA2ZeGrMsUdnzdGso3+aN6SmzGHPy+3Gi+nbliXJaHvXYy28Z0B6PejB+kmL8uOmSt55oMd7sfB1W9JdYVZRn2WLt0qNsHrqUb9isTp6MW3Tp1rZBvneZmK/jgThwnFfWNhg/YZGyf9UTK9Al0KC+GzVq1LJly+yPnuuyDBg/oQBdKgJdAgN50uf7ukZtgPETFtClIgn0R5AAgFCALhWBLgFIdaBLRaBLAFId6FIR6BKAVAe6VAS6BCDVgS4VgS4BSHW4BYAi0CUAqUtOTo744xzgTVZWVkVFBYMuAQBAkbRjx46FXQYAAEgCEF0CAIAS0CUAACgBXQIAgBLQJQAAKAFdAgCAEtAlAAAoAV0CAIAShi6vX79+5513hl0Y8F2pqqpavHjxlClT7rnnnrDLArw4e/Zsy5Ytwy4FUIX3F3R5+0CuHDNmTO/evQ8dOkTShDETGegyuYAubyu4K/Py8p5++unjx48vWrQIxkxkoMvkArq8fZBdybfAmAkOdJlcQJe3D6TLsrIymobLG8mYTP/HVMIuHXAAukwuoEsAQgO6TC6gSwBCA7pMLqBLAEIDukwuAtfl0SUjdz6wYMKQ5i77/7p74vQd/8eyZ64dyopm7O0yb/KjYbcBACHhrssLm2dtYOOM6+iAypVyeNPEs32XDrrXtNG43OxoF+BjzJy5kcOFJSN/I/6B9T6v4AqNEqwuj8oNLWgzeBL14umSZWO3nI/2k9aR55+P9BkAKYirLunqeJv1vL+cPTOh6yF+4URo3X/F7N73H9709PJyY8vjwz4s6HCgaNmpZ2xhCuXzH/ctLehg3kou3tV6tnbpRa7KKG0G939wy/nu+oWppOlUIjBd8na33ov0Xp9KvWv8Fv1EXwqLT5ly4FYNu0EAqDvcdElX05ss7/mzG/YyVvpHEWRo4QizX2KaEJk1UtEd6qtL5hxdHoEuHQlGl5orD2bTTe+MfIujG+DWzBWGK+1+jE4HGDoGpCQuutS0+JfBk0iXkauJz9sy8xc4x49TW+4kvfJow3Qpqely7h+NHXrIgsm4K7WxdqndALsfmjGX6fc3615+4zq6ueTeIfoMXevmLv9jDkIBSAkcdaldFAcZ+5EcXZIo+52cHrHY49KVpQmR9Ty9o5jpk3Tzome8a5eILp0J/sm486ycYyy4RG+Shi4xBwcpiaMuD5TsZqx8vT4Z59Glfk0x7aphF043v1eLKswebDN4WM+DR/SA8eiSWV8+KyKPOKNL6NKZIHUpt7tMZFHywuaiXSdPs+6zO+2lHs09P/ZQpxXaJKJfz4O/OZmLXgEph+/a5alntKDyL9GHpcwINcRTgYgQ+SFT2QZT/BHn2iUm484Eo0suyjatM2kGYQ0VI+836N3ZL3oP1O9grYzo8oLP60cA3I4o6DIix+k7mCZNZsy12W7b+pXT+qafLu0hTpvHs9npTJ4zoksLQUaXzjPriC4PFG1iBX1Paf1En4U8nIweoj8X+nB277AbBIC6w1uXxpxsVqGxLqmvZRnhnoguow9UdV3y14xERgrRpfFzXOZ6/mIfZXioE18bhS4tBKxLyztcHOkNIUs/Ye0SpDQKutThi/6WJzx87VL3IxMPDBilPB8NMP0f9UiPhjRRZuafLo/t9fhUou6iS/2HpMvIe7ZYHAEpi78u7aLkiKAyOk8X150ekN6v9N6lVYjS0pnpj0qADv5mHIDQwN+MJxfQJQChAV0mF9AlAKEBXSYX0CUAoQFdJhfQJQChAV0mF9AlAKEBXSYX0CUAoQFdJhfQJQChAV0mFzHosl+/focPHw67wACEwCOPPPLJJ5+EXQqQECjpskmTJvXq1bt8+XLYpQUgBGpqasIuAkgIlHRJrqTPS5cuhV1aAOqUpk2bMugSRIhBlxg0INXAyAcy0CUArmDkAxnoEgBXMPKBTJy6LCpXyBuAJOflf9BG/jufQZdAI35dFmSHXXYAahlEl0AmAF0eO/nl8VNfXrzyte/JmjW+K6v1fe0fuC/sWgOgBHQJZALQ5dY//HdWi0YPtcrkyWSqq6vT09P5dzr8z2fOHz93NbfXD8OuNQBKQJdAJgBdrtiye2if7MaNG6elpYkElC3lefPMZw2//yNuTNpy5cqVTaXlYwf3DrvWACgBXQKZAHS5dOOOF/o/SroUeynPb7/99sb+lbeObM4Y80mDBg34dtLluh2HJz7XP+xaJwAnlnZv9/6zlXsntg27JLcrQbQwdAlkAtDlL369fcRTXZo0aSL2Xrt2jVyZVvZu/XEHbp78U8O23evXr0/bL1++/N7vDv3sxQGBVuGjMWkDirQv3QpN14a2/fPCRBVSLerSo+JubeWYhhVsv7Xyx0ZZJ+0zH0Kp5naQNuhpOhoHRLfsM34URPc45390puVQaYMpp2gxohkJpNMkqy7LiyesLtO/tRw0Y9oTmZat0kbnlMaOc+ZNGuf/c+G8cwOW5WfHm0bbWXLWSNl5lJHKqQIxHmUvjKib62lCIQBdzlm9dfSgriK6rK6u/vpgcdrv59eMLUsrW1Xvs3UZE8v4fJyiy1Ul+38+Kje48kvXhHb1MP1y4ZdXQUFB0ecdElWXtYJ3xR3byoK8g9K/mbXXaM+jHc2ZWnRJSfLfZ/s6zjTpKp8V6ymiZ3bP302XFvnbtayl2JrrUJcAqHNdlhcv/OtTXBuaMZguC004hx/VbRLd6Jqy5Gznzp3LzrWwqpD2rWUjpz3B4k5D59luO8R8dKxHOR5CG3/XfJpmyWjNEoMAdDnzV5vG5vaQdfntL/7uez/7X/qkn/SFPoUuV2zdM3f80MCKb7rQrFedNQBKGZwr7tlW0TQRxdmOrOwwV4rWzOfgx8082k7ylikvI/nAbe75O+rSyevWbbeTLmUinmFyxGcK/6wpM11+B5SGfv7XI/7uiuMoV6X6GbqOCUCXU5f82ytD/lHo8ubNm9Vrnrw+9IPv/fLv67/2Z6bPzUmXlH9VVdXyzb9/c/JwKW9+ZWxnAxwnaPp2Y/olz70iqcxXikUTnrrUd25/9v0B2ixPy44Z2Ucne9IcUD+faXZnCdV4wSLH6pkXdpw0yZwhs9Vbnuz6nsiazLVTnSvu2VZSInvYGSlrOymyMx0fMWOl00aTXSu98rfr0rUmln520qVXCzsOMKWRX3eIyMrsGweB2GIw5zTmTbGnkWfVXnNk/6OkcNm1MJ7bwyIAXb6ycPXkoTmkSxLlV199pWWaltZg3RM3s1+oyX7xjjvuWL7lD80aZeT163Ljxo3C35YunzZKytuYP0b1Z55QR64s85Qskqyd+TqLUZeR64TrrkCclud4YumYbQNX6geLUkVzdLyg5Y0DiqIZOq2gxXwip2Qu/eVY8ROebWVpGPsqYKSsEWHKx0e/W1rDPhl3zV+sTUYo2O6qS3tVvHXp2HSWAaY68usIXTItxARbiietBpFSCuyWsYd48aWJntOkOxP+R/nqMuLYxFq5DESXo9/41bQXnmrUqBHpcsovP6ifnn5XRoOqr6/X3LrV+O6MzlmtB3brSNt/2LZVbrcfLNq4c9Xr46W8HVb1DTvI250eLGh7mXp0aXnK4Xy526Mmc1AS2ctMYpTbSs+90ska5gIwU/38T+SazOHRTSzRZaVjDsaJDJnY4jQSZu5WcQ6X5pMlaI3f3PM3jwJXXcpTeoXo0qHpXJYj/EZ+HaC7gpke6bhEl9aUEZzsY53Bx5NGZU9cR3lEl04PpEIjAF2++C9vzRwxkOuSfn7+xblbTMvzxt+qKf+HH7iPVf9twfrSDg81H/RY1sJ1H/96/j9LecetS8fZn/rapZ8uNU9NYoXmCC+yu5jlG9er/2zReTnQXFGFE7kkY351c9mqIgsRiTmIp2P0cZL9AbXwkVPFffNnAa1d+rRwgurS4eGGySVRq3k8BrHYR2W9U2lNVGVPoLpMtOl4ALocOmXhv476CemS6QuXC9btuPL19TSmKbPxXXdOf6H/rHe3/+Ch5nk5j9JUffaaDzctniblbXrSKf2wT7jMk3HrXNVBEt9Jl5WWMEkqYv7RjuzzDsV77RPjj8aMYSul2FBFlx+pncgtmV/dLGufbm0VLRV/WG3KxmoWI1KLLmVY5CUkaKu4Wv5yr8qus40XcUbzEyZeX+bdwgmpS0dpyVuFPZxTGthXD+1J40hz/nxmZqax3SPo8z/KezIefTDuM+uvewLQZe4rsxdNfP7uu++mTKp17DnQXsqEdPnq0vVbl8+S9kReUikyP+lxGM1Oj3qYPMsqsEch8etSerDSraCAFTH5mbLpenV4jBCLLpniidyS+dTNtG7o3lamckWm0K7vRUoSsz+7kRaWXZ6C++av9t6ldEJPXTo3XULqMvoqpYGxeBd9XhJZzXNLGcnGZB/95aBM26liSyM/tGnpNUH2P8pv7VI6JrFWLwPQ5Y/H/HzF9H/KyMj49MgXJ85cPHfxqj2HmcP7USZVVVVjF7z70co50h6lUXsbkqr1rjuCaOHb4K96VGaziTXjTWAC0GXe1IU/7ZHdq2tnnpUb6enpu/f96YM95RvetE7GU1Ab+BvI2iaQFk5+XcKWQRKALv99176S3QeOfXHa92Ttv3//oN6P/aRvN2lb6unS4U0aECjBtXDy6xIECf55YABcgS6BDHQJgCvQJZCBLgFwBboEMvivzQBwBf+1GZDBf5wLgCsY+UAGugTAFYx8IANdAuAKRj6QiUGXAKQm0CXgKOkyJyentLQ07KICEAJZWVkVFRVhlwIkBEq6BAAAAF0CAIAS0CUAACgBXQIAgBLQJQAAKAFdAgCAEtAlAAAoAV0CAIAS0CUAACjx/6BMLMNgoqI8AAAAAElFTkSuQmCC)
+
+### ③查看当前 Web 工程所依赖的 jar 包的列表
+
+mvn dependency:list
+
+[INFO] The following files have been resolved:
+[INFO]    org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO]    javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO]    com.liyouxiu.maven:pro_maven_java:jar:1.0-SNAPSHOT:compile
+[INFO]    junit:junit:jar:4.12:test
+
+说明：javax.servlet:javax.servlet-api:jar:3.1.0:provided 格式显示的是一个 jar 包的坐标信息。格式是：
+
+groupId:artifactId:打包方式:version:依赖的范围
+
+这样的格式虽然和我们 XML 配置文件中坐标的格式不同，但是本质上还是坐标信息，大家需要能够认识这样的格式，将来从 Maven 命令的日志或错误信息中看到这样格式的信息，就能够识别出来这是坐标。进而根据坐标到Maven 仓库找到对应的jar包，用这样的方式解决我们遇到的报错的情况。
+
+### ④以树形结构查看当前 Web 工程的依赖信息
+
+mvn dependency:tree
+
+[INFO] com.atguigu.maven:pro02-maven-web:war:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] \- com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT:compile
+
+我们在 pom.xml 中并没有依赖 hamcrest-core，但是它却被加入了我们依赖的列表。原因是：junit 依赖了hamcrest-core，然后基于依赖的传递性，hamcrest-core 被传递到我们的工程了。
+
+# 第十节 实验六：测试依赖的范围
+
+## 1、依赖范围
+
+标签的位置：dependencies/dependency/**scope**
+
+标签的可选值：**compile**/**test**/**provided**/system/runtime/**import**
+
+### ①compile 和 test 对比
+
+|         | main目录（空间） | test目录（空间） | 开发过程（时间） | 部署到服务器（时间） |
+| ------- | ---------------- | ---------------- | ---------------- | -------------------- |
+| compile | 有效             | 有效             | 有效             | 有效                 |
+| test    | 无效             | 有效             | 有效             | 无效                 |
+
+### ②compile 和 provided 对比
+
+|          | main目录（空间） | test目录（空间） | 开发过程（时间） | 部署到服务器（时间） |
+| -------- | ---------------- | ---------------- | ---------------- | -------------------- |
+| compile  | 有效             | 有效             | 有效             | 有效                 |
+| provided | 有效             | 有效             | 有效             | 无效                 |
+
+### ③结论
+
+compile：通常使用的第三方框架的 jar 包这样在项目实际运行时真正要用到的 jar 包都是以 compile 范围进行依赖的。比如 SSM 框架所需jar包。
+
+test：测试过程中使用的 jar 包，以 test 范围依赖进来。比如 junit。
+
+provided：在开发过程中需要用到的“服务器上的 jar 包”通常以 provided 范围依赖进来。比如 servlet-api、jsp-api。而这个范围的 jar 包之所以不参与部署、不放进 war 包，就是避免和服务器上已有的同类 jar 包产生冲突，同时减轻服务器的负担。说白了就是：“**服务器上已经有了，你就别带啦！**”
+
+## 2、测试
+
+### ①验证 compile 范围对 main 目录有效
+
+main目录下的类：HelloServlet 使用compile范围导入的依赖：pro_liyouxiu_maven
+
+验证：使用compile范围导入的依赖对main目录下的类来说是有效的
+
+有效：HelloServlet 能够使用 pro_liyouxiu_maven 工程中的 Calculator 类
+
+验证方式：在 HelloServlet 类中导入 Calculator 类，然后编译就说明有效。
+
+### ②验证test范围对main目录无效
+
+测试方式：在主体程序中导入org.junit.Test这个注解，然后执行编译。
+
+具体操作：在pro-maven-java\src\main\java\com\atguigu\maven目录下修改Calculator.java
+
+```java
+package com.liyouxiu.maven;
+
+import org.junit.Test;
+
+public class Calculator {
+	
+	public int sum(int i, int j){
+		return i + j;
+	}
+	
+}
+```
+
+执行Maven编译命令：
+
+```java
+[ERROR] /D:/maven-workspace/space201026/pro01-maven-java/src/main/java/com/atguigu/maven/Calculator.java:[3,17] 程序包org.junit不存在
+```
+
+### ③验证test和provided范围不参与服务器部署
+
+其实就是验证：通过compile范围依赖的jar包会放入war包，通过test范围依赖的jar包不会放入war包。
+
+![./images](http://heavy_code_industry.gitee.io/code_heavy_industry/assets/img/img026.0ad36150.png)
+
+### ④验证provided范围对测试程序有效
+
+测试方式是在pro02-maven-web的测试程序中加入servlet-api.jar包中的类。
+
+修改：**pro02-maven-web**\src\**test**\java\com\atguigu\maven\**CalculatorTest.java**
+
+```java
+package com.atguigu.maven;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+
+import org.junit.Test;
+import com.atguigu.maven.Calculator;
+
+// 静态导入的效果是将Assert类中的静态资源导入当前类
+// 这样一来，在当前类中就可以直接使用Assert类中的静态资源，不需要写类名
+import static org.junit.Assert.*;
+
+public class CalculatorTest{
+	
+	@Test
+	public void testSum(){
+		
+		// 1.创建Calculator对象
+		Calculator calculator = new Calculator();
+		
+		// 2.调用Calculator对象的方法，获取到程序运行实际的结果
+		int actualResult = calculator.sum(5, 3);
+		
+		// 3.声明一个变量，表示程序运行期待的结果
+		int expectedResult = 8;
+		
+		// 4.使用断言来判断实际结果和期待结果是否一致
+		// 如果一致：测试通过，不会抛出异常
+		// 如果不一致：抛出异常，测试失败
+		assertEquals(expectedResult, actualResult);
+		
+	}
+	
+}
+```
+
+然后运行Maven的编译命令：mvn compile
+
+然后看到编译成功。
+
+# 第十一节 实验七：测试依赖的传递性
+
+## 1、依赖的传递性
+
+### ①概念
+
+A 依赖 B，B 依赖 C，那么在 A 没有配置对 C 的依赖的情况下，A 里面能不能直接使用 C？
+
+### ②传递的原则
+
+在 A 依赖 B，B 依赖 C 的前提下，C 是否能够传递到 A，取决于 B 依赖 C 时使用的依赖范围。
+
+- B 依赖 C 时使用 compile 范围：可以传递
+- B 依赖 C 时使用 test 或 provided 范围：不能传递，所以需要这样的 jar 包时，就必须在需要的地方明确配置依赖才可以。
+
+## 2、使用 compile 范围依赖 spring-core
+
+测试方式：让 pro01-maven-java 工程依赖 spring-core
+
+具体操作：编辑 pro01-maven-java 工程根目录下 pom.xml
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-core</artifactId>
+	<version>4.0.0.RELEASE</version>
+</dependency>
+```
+
+使用 mvn dependency:tree 命令查看效果：
+
+[INFO] com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+[INFO] \- commons-logging:commons-logging:jar:1.1.1:compile
+
+还可以在 Web 工程中，使用 mvn dependency:tree 命令查看效果（需要重新将 pro01-maven-java 安装到仓库）：[INFO] com.atguigu.maven:pro02-maven-web:war:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] \- com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT:compile
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+[INFO] \- commons-logging:commons-logging:jar:1.1.1:compile
+
+## 3、验证 test 和 provided 范围不能传递
+
+从上面的例子已经能够看到，pro01-maven-java 依赖了 junit，但是在 pro02-maven-web 工程中查看依赖树的时候并没有看到 junit。
+
+要验证 provided 范围不能传递，可以在 pro01-maven-java 工程中加入 servlet-api 的依赖。
+
+```xml
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.1.0</version>
+	<scope>provided</scope>
+</dependency>
+```
+
+效果还是和之前一样：[INFO] com.atguigu.maven:pro02-maven-web:war:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] \- com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT:compile
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+[INFO] \- commons-logging:commons-logging:jar:1.1.1:compile
+
+# 第十二节 实验七：测试依赖的传递性
+
+## 1、依赖的传递性
+
+### ①概念
+
+A 依赖 B，B 依赖 C，那么在 A 没有配置对 C 的依赖的情况下，A 里面能不能直接使用 C？
+
+### ②传递的原则
+
+在 A 依赖 B，B 依赖 C 的前提下，C 是否能够传递到 A，取决于 B 依赖 C 时使用的依赖范围。
+
+- B 依赖 C 时使用 compile 范围：可以传递
+- B 依赖 C 时使用 test 或 provided 范围：不能传递，所以需要这样的 jar 包时，就必须在需要的地方明确配置依赖才可以。
+
+## 2、使用 compile 范围依赖 spring-core
+
+测试方式：让 pro01-maven-java 工程依赖 spring-core
+
+具体操作：编辑 pro01-maven-java 工程根目录下 pom.xml
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-core</artifactId>
+	<version>4.0.0.RELEASE</version>
+</dependency>
+```
+
+使用 mvn dependency:tree 命令查看效果：
+
+[INFO] com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+[INFO] \- commons-logging:commons-logging:jar:1.1.1:compile
+
+还可以在 Web 工程中，使用 mvn dependency:tree 命令查看效果（需要重新将 pro01-maven-java 安装到仓库）：
+
+[INFO] com.atguigu.maven:pro02-maven-web:war:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] \- com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT:compile
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+[INFO] \- commons-logging:commons-logging:jar:1.1.1:compile
+
+## 3、验证 test 和 provided 范围不能传递
+
+从上面的例子已经能够看到，pro01-maven-java 依赖了 junit，但是在 pro02-maven-web 工程中查看依赖树的时候并没有看到 junit。
+
+要验证 provided 范围不能传递，可以在 pro01-maven-java 工程中加入 servlet-api 的依赖。
+
+```xml
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.1.0</version>
+	<scope>provided</scope>
+</dependency>
+```
+
+效果还是和之前一样：
+
+[INFO] com.atguigu.maven:pro02-maven-web:war:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] \- com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT:compile
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+[INFO] \- commons-logging:commons-logging:jar:1.1.1:compile
+
+# 第十三节 实验八：测试依赖的排除
+
+## 1、概念
+
+当 A 依赖 B，B 依赖 C 而且 C 可以传递到 A 的时候，A 不想要 C，需要在 A 里面把 C 排除掉。而往往这种情况都是为了避免 jar 包之间的冲突。
+
+![./images](http://heavy_code_industry.gitee.io/code_heavy_industry/assets/img/img027.2faff879.png)
+
+所以配置依赖的排除其实就是阻止某些 jar 包的传递。因为这样的 jar 包传递过来会和其他 jar 包冲突。
+
+## 2、配置方式
+
+```xml
+<dependency>
+	<groupId>com.atguigu.maven</groupId>
+	<artifactId>pro01-maven-java</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<scope>compile</scope>
+	<!-- 使用excludes标签配置依赖的排除	-->
+	<exclusions>
+		<!-- 在exclude标签中配置一个具体的排除 -->
+		<exclusion>
+			<!-- 指定要排除的依赖的坐标（不需要写version） -->
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</exclusion>
+	</exclusions>
+</dependency>
+```
+
+## 3、测试
+
+测试的方式：在 pro02-maven-web 工程中配置对 commons-logging 的排除
+
+```xml
+<dependency>
+	<groupId>com.atguigu.maven</groupId>
+	<artifactId>pro01-maven-java</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<scope>compile</scope>
+	<!-- 使用excludes标签配置依赖的排除	-->
+	<exclusions>
+		<!-- 在exclude标签中配置一个具体的排除 -->
+		<exclusion>
+			<!-- 指定要排除的依赖的坐标（不需要写version） -->
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</exclusion>
+	</exclusions>
+</dependency>
+```
+
+运行 mvn dependency:tree 命令查看效果：
+
+[INFO] com.atguigu.maven:pro02-maven-web:war:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] | \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] \- com.atguigu.maven:pro01-maven-java:jar:1.0-SNAPSHOT:compile
+[INFO] \- org.springframework:spring-core:jar:4.0.0.RELEASE:compile
+
+发现在 spring-core 下面就没有 commons-logging 了。
+
+# 第十四节 实验九：继承
+
+## 1、概念
+
+Maven工程之间，A 工程继承 B 工程
+
+- B 工程：父工程
+- A 工程：子工程
+
+本质上是 A 工程的 pom.xml 中的配置继承了 B 工程中 pom.xml 的配置。
+
+## 2、作用
+
+在父工程中统一管理项目中的依赖信息，具体来说是管理依赖信息的版本。
+
+它的背景是：
+
+- 对一个比较大型的项目进行了模块拆分。
+- 一个 project 下面，创建了很多个 module。
+- 每一个 module 都需要配置自己的依赖信息。
+
+它背后的需求是：
+
+- 在每一个 module 中各自维护各自的依赖信息很容易发生出入，不易统一管理。
+- 使用同一个框架内的不同 jar 包，它们应该是同一个版本，所以整个项目中使用的框架版本需要统一。
+- 使用框架时所需要的 jar 包组合（或者说依赖信息组合）需要经过长期摸索和反复调试，最终确定一个可用组合。这个耗费很大精力总结出来的方案不应该在新的项目中重新摸索。
+
+通过在父工程中为整个项目维护依赖信息的组合既**保证了整个项目使用规范、准确的 jar 包**；又能够将**以往的经验沉淀**下来，节约时间和精力。
+
+## 3、举例
+
+在一个工程中依赖多个 Spring 的 jar 包
+
+[INFO] +- org.springframework:**spring-core**:jar:**4.0.0**.RELEASE:compile
+[INFO] | \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] +- org.springframework:**spring-beans**:jar:**4.0.0**.RELEASE:compile
+[INFO] +- org.springframework:**spring-context**:jar:**4.0.0**.RELEASE:compile
+[INFO] +- org.springframework:**spring-expression**:jar:4.0.0.RELEASE:compile
+[INFO] +- org.springframework:**spring-aop**:jar:**4.0.0**.RELEASE:compile
+[INFO] | \- aopalliance:aopalliance:jar:1.0:compile
+
+使用 Spring 时要求所有 Spring 自己的 jar 包版本必须一致。为了能够对这些 jar 包的版本进行统一管理，我们使用继承这个机制，将所有版本信息统一在父工程中进行管理。
+
+## 4、操作
+
+### ①创建父工程
+
+创建的过程和前面创建 pro-maven-java 一样。
+
+工程名称：pro-maven-parent
+
+工程创建好之后，要修改它的打包方式：
+
+```xml
+  <groupId>com.atguigu.maven</groupId>
+  <artifactId>pro03-maven-parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <!-- 当前工程作为父工程，它要去管理子工程，所以打包方式必须是 pom -->
+  <packaging>pom</packaging>
+```
+
+只有打包方式为 pom 的 Maven 工程能够管理其他 Maven 工程。打包方式为 pom 的 Maven 工程中不写业务代码，它是专门管理其他 Maven 工程的工程。
+
+### ②创建模块工程
+
+模块工程类似于 IDEA 中的 module，所以需要**进入 pro03-maven-parent 工程的根目录**，然后运行 mvn archetype:generate 命令来创建模块工程。
+
+假设，我们创建三个模块工程：
+
+![./images](data:image/png;base64,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)
+
+### ③查看被添加新内容的父工程 pom.xml
+
+下面 modules 和 module 标签是聚合功能的配置
+
+```xml
+  <modules>  
+    <module>pro_maven_demo01</module>
+    <module>pro_maven_demo02</module>
+    <module>pro_maven_demo03</module>
+  </modules>
+```
+
+### ④解读子工程的pom.xml
+
+```xml
+<!-- 使用parent标签指定当前工程的父工程 -->
+<parent>
+	<!-- 父工程的坐标 -->
+	<groupId>com.atguigu.maven</groupId>
+	<artifactId>pro03-maven-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+</parent>
+
+<!-- 子工程的坐标 -->
+<!-- 如果子工程坐标中的groupId和version与父工程一致，那么可以省略 -->
+<!-- <groupId>com.atguigu.maven</groupId> -->
+<artifactId>pro04-maven-module</artifactId>
+<!-- <version>1.0-SNAPSHOT</version> -->
+```
+
+### ⑤在父工程中配置依赖的统一管理
+
+```xml
+<!-- 使用dependencyManagement标签配置对依赖的管理 -->
+<!-- 被管理的依赖并没有真正被引入到工程 -->
+<dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+	</dependencies>
+</dependencyManagement>
+```
+
+### ⑥子工程中引用那些被父工程管理的依赖
+
+关键点：省略版本号
+
+```xml
+<!-- 子工程引用父工程中的依赖信息时，可以把版本号去掉。	-->
+<!-- 把版本号去掉就表示子工程中这个依赖的版本由父工程决定。 -->
+<!-- 具体来说是由父工程的dependencyManagement来决定。 -->
+<dependencies>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-beans</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-expression</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-aop</artifactId>
+	</dependency>
+</dependencies>
+```
+
+### ⑦在父工程中升级依赖信息的版本
+
+```xml
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+```
+
+然后在子工程中运行mvn dependency:list，效果如下：
+
+[INFO] org.springframework:spring-aop:jar:4.1.4.RELEASE:compile
+[INFO] org.springframework:spring-core:jar:4.1.4.RELEASE:compile
+[INFO] org.springframework:spring-context:jar:4.1.4.RELEASE:compile
+[INFO] org.springframework:spring-beans:jar:4.1.4.RELEASE:compile
+[INFO] org.springframework:spring-expression:jar:4.1.4.RELEASE:compile
+
+### ⑧在父工程中声明自定义属性
+
+```xml
+<!-- 通过自定义属性，统一指定Spring的版本 -->
+<properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	
+	<!-- 自定义标签，维护Spring版本数据 -->
+	<atguigu.spring.version>4.3.6.RELEASE</atguigu.spring.version>
+</properties>
+```
+
+在需要的地方使用${}的形式来引用自定义的属性名：
+
+```xml
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${atguigu.spring.version}</version>
+			</dependency>
+```
+
+真正实现“一处修改，处处生效”。
+
+## 5、实际意义
+
+![./images](http://heavy_code_industry.gitee.io/code_heavy_industry/assets/img/img037.53c95c38.jpg)
+
+编写一套符合要求、开发各种功能都能正常工作的依赖组合并不容易。如果公司里已经有人总结了成熟的组合方案，那么再开发新项目时，如果不使用原有的积累，而是重新摸索，会浪费大量的时间。为了提高效率，我们可以使用工程继承的机制，让成熟的依赖组合方案能够保留下来。
+
+如上图所示，公司级的父工程中管理的就是成熟的依赖组合方案，各个新项目、子系统各取所需即可。
+
+# 第十五节 实验十：聚合
+
+## 1、聚合本身的含义
+
+部分组成整体
+
+![./images](http://heavy_code_industry.gitee.io/code_heavy_industry/assets/img/img029.48831f65.jpg)
+
+动画片《战神金刚》中的经典台词：“我来组成头部！我来组成手臂！”就是聚合关系最生动的体现。
+
+## 2、Maven 中的聚合
+
+使用一个“总工程”将各个“模块工程”汇集起来，作为一个整体对应完整的项目。
+
+- 项目：整体
+- 模块：部分
+
+概念的对应关系：
+
+从继承关系角度来看：
+
+- 父工程
+- 子工程
+
+从聚合关系角度来看：
+
+- 总工程
+- 模块工程
+
+## 3、好处
+
+- 一键执行 Maven 命令：很多构建命令都可以在“总工程”中一键执行。
+
+  以 mvn install 命令为例：Maven 要求有父工程时先安装父工程；有依赖的工程时，先安装被依赖的工程。我们自己考虑这些规则会很麻烦。但是工程聚合之后，在总工程执行 mvn install 可以一键完成安装，而且会自动按照正确的顺序执行。
+
+- 配置聚合之后，各个模块工程会在总工程中展示一个列表，让项目中的各个模块一目了然。
+
+## 4、聚合的配置
+
+在总工程中配置 modules 即可：
+
+```xml
+	<modules>  
+		<module>pro04-maven-module</module>
+		<module>pro05-maven-module</module>
+		<module>pro06-maven-module</module>
+	</modules>
+```
+
+## 5、依赖循环问题
+
+如果 A 工程依赖 B 工程，B 工程依赖 C 工程，C 工程又反过来依赖 A 工程，那么在执行构建操作时会报下面的错误：
+
+DANGER
+
+[ERROR] [ERROR] The projects in the reactor contain a cyclic reference:
+
+这个错误的含义是：循环引用。
+
+# [代码重工 (gitee.io)](http://heavy_code_industry.gitee.io/code_heavy_industry/pro002-maven/)

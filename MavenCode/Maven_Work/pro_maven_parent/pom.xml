@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.liyouxiu.maven</groupId>
+  <artifactId>pro_maven_parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <!-- 修改打包方式 -->
+  <!-- 当前工程作为父工程 要去管理其他工程，打包方式必须是pom-->
+  <packaging>pom</packaging>
+
+  <name>pro_maven_parent</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- 创建我们自定义的属性标签 -->
+    <!-- 引用方式 -->
+    <liyouxiu.spring.version>4.2.0.RELEASE</liyouxiu.spring.version>
+  </properties>
+  <modules>  
+    <module>pro_maven_demo01</module>
+    <module>pro_maven_demo02</module>
+    <module>pro_maven_demo03</module>
+  </modules>
+<!-- 使用dependencyManagement标签配置对依赖的管理 -->
+<!-- 被管理的依赖并没有真正被引入到工程 -->
+<dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+      <!-- 通过引用属性表达式设定版本号，这样版本号就成了一个动态值 -->
+			<version>${liyouxiu.spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.0.0.RELEASE</version>
+		</dependency>
+	</dependencies>
+</dependencyManagement>
+</project>

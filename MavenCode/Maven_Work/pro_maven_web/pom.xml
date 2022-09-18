@@ -35,5 +35,23 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+    <!-- 配置对Java工程pro-maven-java的依赖 -->
+    <!-- 具体的配置方式：在dependency标签内使用坐标实现依赖 -->
+    <dependency>
+	    <groupId>com.liyouxiu.maven</groupId>
+	    <artifactId>pro_maven_java</artifactId>
+	    <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+
+      <!-- 配置依赖排除 -->
+      <exclusions>
+        <!-- 配置具体的排除信息，让Commons-logging不要传递到当前pro_maven_web -->
+        <exclusion>
+            <!-- 这里指定坐标时候不需要指定 -->
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
 </project>
