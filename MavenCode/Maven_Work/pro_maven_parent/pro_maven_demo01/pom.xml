@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <!-- 给当前工程指定父工程 -->
+  <parent>
+    <!-- 通过指定父工程的坐标来指定父工程 -->
+    <!-- 子工程的 groupId，version和父工程的ID一样就可以省略 -->
+    <groupId>com.liyouxiu.maven</groupId>
+    <artifactId>pro_maven_parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>com.liyouxiu.maven</groupId>
+  <artifactId>pro_maven_demo01</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>pro_maven_demo01</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+      <!-- 对于已经在父工程中进行了管理的依赖，子工程中引用时可以不用写版本 -->
+			<!-- <version>4.0.0.RELEASE</version> -->
+		</dependency>
+  </dependencies>
+</project>
