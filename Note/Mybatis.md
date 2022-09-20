@@ -465,25 +465,48 @@ public class MyBatisTest {
 
 ~~~xml
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!--MyBatis核心配置文件中，标签的顺序： properties?,settings?,typeAliases?,typeHandlers?, objectFactory?,objectWrapperFactory?,reflectorFactory?, plugins?,environments?,databaseIdProvider?,mappers? -->
-    <!--引入properties文件-->
+
+    <!--MyBatis核心配置文件中，标签的顺序： properties?,settings?,typeAliases?,
+    typeHandlers?, objectFactory?,objectWrapperFactory?,reflectorFactory?,
+    plugins?,environments?,databaseIdProvider?,mappers? -->
+
+    <!-- 引入properties文件此后就可以在当前文件中使用${key}的方式访问value -->
     <properties resource="jdbc.properties" />
-    <!--设置类型别名-->
+
+    <!--
+    typeAlias设置类型别名，即为某个具体的类型设置一个别名
+    在MyBatis的范围中，就可以使用别名表示某个具体的类型
+     -->
     <typeAliases>
-        <!--typeAlias：设置某个类型的别名 属性：type：设置需要设置别名的类型 alias：设置某个类型的别名，若不设置该属性，那么该类型拥有默认的别名，即类名 且不区分大小写 -->
-        <!--<typeAlias type="com.atguigu.mybatis.pojo.User"></typeAlias>-->
-        <!--以包为单位，将包下所有的类型设置默认的类型别名，即类名且不区分大小写-->
-        <package name="com.atguigu.mybatis.pojo"/>
+        <!--
+        type：设置需要起别名的类型
+        alias：设置某个类型的别名
+              -->
+<!--        <typeAlias type="com.liyouxiu.mybatis.pojo.User" alias="abc"></typeAlias>-->
+        <!--   不写alias默认的别名就是类名   且不区分大小写    -->
+<!--        <typeAlias type="com.liyouxiu.mybatis.pojo.User" ></typeAlias>-->
+        <!-- 通过包来设置类型别名，指定的包下所有的类型都拥有，默认别名 -->
+        <package name="com.liyouxiu.mybatis.pojo"/>
     </typeAliases>
-    <!--environments：配置多个连接数据库的环境 属性：default：设置默认使用的环境的id -->
+
+    <!--    配置连接数据库环境-->
+    <!--environment：配置某个具体的环境 属性：id：表示连接数据库的环境的唯一标识，不能重复 -->
     <environments default="development">
-        <!--environment：配置某个具体的环境 属性：id：表示连接数据库的环境的唯一标识，不能重复 -->
         <environment id="development">
-            <!--transactionManager：设置事务管理方式 属性：type="JDBC|MANAGED" JDBC：表示当前环境中，执行SQL时，使用的是JDBC中原生的事务管理方式，事 务的提交或回滚需要手动处理MANAGED：被管理，例如Spring -->
+            <!--transactionManager：设置事务管理方式
+            属性：type="JDBC|MANAGED"
+            JDBC：表示当前环境中，执行SQL时，使用的是JDBC中原生的事务管理方式，事务的提交或回滚需要手动处理
+            MANAGED：被管理，例如Spring -->
             <transactionManager type="JDBC"/>
-            <!--dataSource：配置数据源 属性：type：设置数据源的类型 type="POOLED|UNPOOLED|JNDI" POOLED：表示使用数据库连接池缓存数据库连接 UNPOOLED：表示不使用数据库连接池 JNDI：表示使用上下文中的数据源 -->
+            <!--dataSource：配置数据源
+            属性：type：设置数据源的类型 type="POOLED|UNPOOLED|JNDI"
+            POOLED：表示使用数据库连接池缓存数据库连接
+            UNPOOLED：表示不使用数据库连接池
+            JNDI：表示使用上下文中的数据源 -->
             <dataSource type="POOLED">
                 <!--设置连接数据库的驱动-->
                 <property name="driver" value="${jdbc.driver}"/>
@@ -495,24 +518,45 @@ public class MyBatisTest {
                 <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
+        
         <environment id="test">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/ssm/serverTimezone=UTC"/>
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm"/>
                 <property name="username" value="root"/>
-                <property name="password" value="123456"/>
+                <property name="password" value="root"/>
             </dataSource>
         </environment>
     </environments>
-    <!--引入映射文件-->
+
+<!--  引入mybatis的映射文件  -->
     <mappers>
-        <!--<mapper resource="mappers/UserMapper.xml"/>-->
-        <!--以包为单位引入映射文件 要求： 1、mapper接口所在的包要和映射文件所在的包一致 2、mapper接口要和映射文件的名字一致 -->
-        <package name="com.atguigu.mybatis.mapper"/>
+<!--        <mapper resource="mappers/UserMapper.xml"/>-->
+        <!--
+        以包的方式来引入隐射文件，但是要满足两个条件
+            1.mapper接口和映射文件所在的包必须一致
+            2.mapper接口的名字和映射文件的名字必须保持一致
+            注意问题 发现测试无法通过是先将maven项目clean下 在重新compile
+             -->
+        <package name="com.liyouxiu.mybatis.mapper"/>
     </mappers>
+
 </configuration>
 ~~~
+
+## 3.1properties配置文件
+
+~~~properties
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/ssm
+jdbc.username=root
+jdbc.password=root
+~~~
+
+**引用方式在Mybatis-cofig.xml文件中使用**
+
+
 
 # 4.Mybatis增删改查
 
@@ -598,6 +642,119 @@ public class SqlSessionUtil {
     <!--    List<User> getAllUsers();-->
     <select id="getAllUsers" resultType="com.liyouxiu.mybatis.pojo.User">
         select * from t_user
+    </select>
+~~~
+
+# 5、MyBatis获取参数值的两种方式
+
+> MyBatis获取参数值的两种方式：**${}**和**#{}**
+>
+> ${}的本质就是字符串拼接，#{}的本质就是占位符赋值
+>
+> ${}使用字符串拼接的方式拼接sql，若为字符串类型或日期类型的字段进行赋值时，需要手动加单引号；但是#{}使用占位符赋值的方式拼接sql，此时为字符串类型或日期类型的字段进行赋值时，可以自动添加单引号
+
+## 5.1、单个字面量类型的参数
+
+> #{}的本质是占位符赋值   ${}的本质是字符串拼接
+>
+> 若mapper接口中的方法参数为单个的字面量类型
+>
+> 此时可以使用${}和#{}以任意的名称获取参数的值，注意${}需要手动加单引号
+
+~~~xml
+	<!--    User GetUserByUsername(String username);-->
+    <select id="GetUserByUsername" resultType="User">
+        select * from t_user where username=#{username}
+    </select>
+~~~
+
+## 5.2、多个字面量类型的参数
+
+> 若mapper接口中的方法参数为多个时
+>
+> 此时MyBatis会自动将这些参数放在一个map集合中，以arg0,arg1...为键，以参数为值；
+>
+> 以param1,param2...为键，以参数为值；因此只需要通过${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号
+
+~~~xml
+    <!--    User checkLogin(String username, String password);-->
+    <select id="checkLogin" resultType="User">
+        select * from t_user where username =#{arg0} and password =#{arg1}
+    </select>
+~~~
+
+## 5.3、map集合类型的参数
+
+> 若mapper接口中的方法需要的参数为多个时，此时可以手动创建map集合，将这些数据放在map中
+>
+> 只需要通过${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号
+
+**接口**
+
+~~~java
+    /*
+     * 以map集合验证登录
+     * */
+    User checkLoginByMap(Map<String,Object> map);
+~~~
+
+**映射文件**
+
+~~~xml
+    <!--    User checkLoginByMap(Map<String,Object> map);-->
+    <select id="checkLoginByMap" resultType="User">
+        select * from t_user where username = #{username} and password = #{password}
+    </select>
+~~~
+
+**测试类**
+
+~~~java
+    @Test
+    public void TestcheckLoginByMap(){
+        SqlSession sqlSession = SqlSessionUtil.getsqlSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        Map<String,Object> map = new HashMap<>();
+        map.put("username","root");
+        map.put("password","123456");
+        User user = mapper.checkLoginByMap(map);
+        System.out.println(user);
+    }
+~~~
+
+## 5.4、实体类类型的参数
+
+> 若mapper接口中的方法参数为实体类对象时
+>
+> 此时可以使用${}和#{}，通过访问实体类对象中的属性名获取属性值，注意${}需要手动加单引号
+
+~~~xml
+    <!--    void insertUser(User user);-->
+    <insert id="insertUser">
+        insert into t_user values (null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+~~~
+
+## 5.5、使用@Param标识参数
+
+> 可以通过@Param注解标识mapper接口中的方法参数
+>
+> 此时，会将这些参数放在map集合中，以@Param注解的value属性值为键，以参数为值；以param1,param2...为键，以参数为值；只需要通过${}和#{}访问map集合的键就可以获取相对应的值，
+>
+> 注意${}需要手动加单引号
+
+**接口**
+
+~~~java
+User checkLoginByParam(@Param("username") String username, @Param("password") String password);
+~~~
+
+**映射文件**
+
+~~~xml
+<!--    User checkLoginByParam(@Param("username") String username, @Param("password") String password);-->
+    <select id="checkLoginByParam" resultType="User">
+        select * from t_user where username= #{username} and password = #{password}
     </select>
 ~~~
 
