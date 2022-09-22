@@ -758,3 +758,272 @@ User checkLoginByParam(@Param("username") String username, @Param("password") St
     </select>
 ~~~
 
+# 6、MyBatis的各种查询功能
+
+## 6.1、查询一个实体类对象
+
+~~~java
+/**
+     * 根据ID查询用户信息
+     */
+    User getUserById(@Param("id") int id );
+~~~
+
+~~~xml
+    <!--  User getUserById(@Param("id") int id );  -->
+    <select id="getUserById" resultType="User">
+        select * from t_user where id=#{id}
+    </select>
+~~~
+
+## 6.2、查询一个list集合
+
+~~~java
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    List<User> getAllUsers();
+~~~
+
+~~~xml
+    <!--    List<User> getAllUsers();-->
+    <select id="getAllUsers" resultType="User">
+        select * from t_user
+    </select>
+~~~
+
+> **当查询的数据为多条时，不能使用实体类作为返回值，否则会抛出异常**
+>
+> TooManyResultsException；但是若查询的数据只有一条，可以使用实体类或集合作为返回值
+
+## 6.3、查询单个数据
+
+~~~java
+    /**
+     *查询用户的总数量
+     * @return 
+     * 在MyBatis中，对于Java中常用的类型都设置了类型别名 
+     * 例如： java.lang.Integer-->int|integer 
+     * 例如： int-->_int|_integer
+     * 例如： Map-->map,List-->list
+     */
+    Integer getCount();
+~~~
+
+~~~xml
+    <!--    Integer getCount();-->
+    <select id="getCount" resultType="Integer">
+        select count(*) from t_user
+    </select>
+~~~
+
+## 6.4、查询一条数据为map集合
+
+~~~java
+    /**
+     *根据ID查询用户信息为map集合
+     */
+    Map<String,Object> getUserByIdToMap(@Param("id") Integer id);
+~~~
+
+~~~xml
+    <!--    Map<String,Object> getUserByIdToMap(@Param("id") Integer id);-->
+    <select id="getUserByIdToMap" resultType="map">
+        select * from t_user where id=#{id}
+    </select>
+~~~
+
+~~~
+查询结果
+{password=123456, gender=男, id=1, age=23, email=123456@qq.com, username=root}
+~~~
+
+## 6.5、查询多条数据为map集合
+
+### ①方式一
+
+~~~java
+/**
+     * 查询所有的用户信息为map集合
+     * @return
+     *若查询的数据有多条的时候，并且要将每条数据转换为map集合
+     * 1.将map接口的返回值设置为泛型为map的list集合
+     * 结果： [{password=123456, gender=男, id=1, age=23, email=123456@qq.com, username=root},
+     *         {password=admin, gender=男, id=2, age=22, email=123456@qq.com, username=liyouxiu},
+     *         {password=admin, gender=男, id=3, age=23, email=123456@qq.com, username=小明}]
+     * 
+     */
+
+    List<Map<String,Object>> getAllToMap();
+~~~
+
+~~~xml
+    <!--    Map<String,Object> getAllToMap();-->
+    <select id="getAllToMap" resultType="map">
+        select * from t_user
+    </select>
+~~~
+
+### ②方式二
+
+~~~~java
+/**
+     * 查询所有的用户信息为map集合
+     * @return
+     *若查询的数据有多条的时候，并且要将每条数据转换为map集合2.可以将每条数据转换的map集合放在一个大的map集合中，但是必须通过		 *	@MapKey注解
+     * 将查询的某个字段的值作为map的键
+     *    @MapKey("id")
+     *     Map<String, Object> getAllToMap();
+     * 结果：{1={password=123456, gender=男, id=1, age=23, email=123456@qq.com, username=root},
+     *         2={password=admin, gender=男, id=2, age=22, email=123456@qq.com, username=liyouxiu},
+     *         3={password=admin, gender=男, id=3, age=23, email=123456@qq.com, username=小明}}
+     */
+    @MapKey("id")
+    Map<String,Object> getAllToMap();
+~~~~
+
+~~~xml
+    <!--    Map<String,Object> getAllToMap();-->
+    <select id="getAllToMap" resultType="map">
+        select * from t_user
+    </select>
+~~~
+
+# 7、特殊SQL的执行
+
+## 7.1、模糊查询
+
+~~~java
+    /**
+     * 通过用户名模糊查询用户信息
+     */
+    List<User> getUserByLike(@Param("mohu") String mohu);
+~~~
+
+~~~xml
+    <!--    List<User> getUserByLike(@Param("mohu") String mohu);-->
+    <select id="getUserByLike" resultType="User">
+        <!--select * from t_user where username like '%${mohu}%'-->
+        <!--select * from t_user where username like concat('%{#mohu}%')-->
+        select * from t_user where username like "%"#{mohu}"%"
+    </select>
+~~~
+
+## 7.2、批量删除
+
+~~~java
+    /**
+     * 批量删除
+     */
+    void DeleteMoreUsere(@Param("ids") String ids);//ids:9,10
+~~~
+
+~~~xml
+    <!--    void DeleteMoreUsere(@Param("ids") String ids); //ids:9,10-->
+    <delete id="DeleteMoreUsere">
+        delete from t_user where id in(${ids})
+    </delete>
+~~~
+
+## 7.3、动态设置表名
+
+~~~java
+    /**
+     * 动态设置表名
+     */
+    List<User> getAllUsers(@Param("tableName") String tableName);
+~~~
+
+~~~xml
+    <!--   List<User> getAllUsers(@Param("tableName") String tableName);-->
+    <select id="getAllUsers" resultType="User">
+        select * from ${tableName}
+    </select>
+~~~
+
+## 7.4、添加功能获取自增的主键
+
+> 场景模拟：
+>
+> t_clazz(clazz_id,clazz_name)
+>
+> t_student(student_id,student_name,clazz_id)
+>
+> 1、添加班级信息
+>
+> 2、获取新添加的班级的id
+>
+> 3、为班级分配学生，即将某学的班级id修改为新添加的班级的id
+
+~~~java
+/*** 添加用户信息 
+* @param user 
+* @return 
+* useGeneratedKeys：设置使用自增的主键 
+* keyProperty：因为增删改有统一的返回值是受影响的行数，因此只能将获取的自增的主键放在传输的参 数user对象的某个属性中 
+*/ 
+int insertUser(User user);
+~~~
+
+~~~xml
+    <!--    void insertUser(User user);-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" >
+        insert into t_user values (null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+~~~
+
+# 8、自定义映射resultMap
+
+## 8.1、resultMap处理字段和属性的映射关系
+
+> 若字段名和实体类中的属性名不一致，则可以通过resultMap设置自定义映射
+
+~~~xml
+<!--resultMap：设置自定义映射 
+属性： 
+id：表示自定义映射的唯一标识 
+type：查询的数据要映射的实体类的类型 子
+标签： 
+id：设置主键的映射关系 
+result：设置普通字段的映射关系
+association：设置多对一的映射关系 
+collection：设置一对多的映射关系 
+属性： 
+property：设置映射关系中实体类中的属性名 
+column：设置映射关系中表中的字段名 
+-->
+<resultMap id="userMap" type="User">
+    <id property="id" column="id"></id>
+    <result property="userName" column="user_name"></result>
+    <result property="password" column="password"></result>
+    <result property="age" column="age"></result>
+    <result property="sex" column="sex"></result>
+</resultMap>
+<!--List<User> testMohu(@Param("mohu") String mohu);-->
+<select id="testMohu" resultMap="userMap">
+    <!--select * from t_user where username like '%${mohu}%'--> 
+    select id,user_name,password,age,sex from t_user where user_name like concat('%',#{mohu},'%') 
+</select>
+~~~
+
+> 若字段名和实体类中的属性名不一致，但是字段名符合数据库的规则（使用_），实体类中的属性名符合Java的规则（使用驼峰）
+>
+> 此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系
+>
+> a>可以通过为字段起别名的方式，保证和实体类中的属性名保持一致
+>
+> b>可以在MyBatis的核心配置文件中设置一个全局配置信息mapUnderscoreToCamelCase，可
+>
+> 以在查询表中数据时，自动将_类型的字段名转换为驼峰
+>
+> 例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为
+>
+> userName
+
+## 8.2、多对一映射处理
+
+> 场景模拟：
+>
+> 查询员工信息以及员工所对应的部门信息
+

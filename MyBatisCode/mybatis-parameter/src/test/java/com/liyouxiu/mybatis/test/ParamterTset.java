@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ParamterTset {
     @Test
@@ -52,6 +53,37 @@ public class ParamterTset {
         User user = mapper.checkLoginByParam("liyouxiu", "admin");
         System.out.println(user);
 
+    }
+
+    @Test
+    public void TestinsertUserdemo(){
+        SqlSession sqlSession = SqlSessionUtil.getsqlSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        System.out.println("请输入用户信息");
+        User user=new User();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入用户姓名:");
+        user.setUsername(sc.nextLine());
+        System.out.println("请输入密码:");
+        user.setPassword(sc.nextLine());
+        System.out.println("请输入用户年龄:");
+        user.setAge(Integer.valueOf(sc.nextLine()));
+        System.out.println("请输入用户性别:");
+        user.setGender(sc.nextLine());
+        System.out.println("请输入用户邮箱:");
+        user.setEmail(sc.nextLine());
+        mapper.insertUserdemo(user);
+
+    }
+
+    @Test
+    public void TestgetUserById(){
+        SqlSession sqlSession = SqlSessionUtil.getsqlSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入ID");
+        User user = mapper.getUserById(sc.nextInt());
+        System.out.println(user);
     }
 
 }

@@ -1,0 +1,5 @@
+com\liyouxiu\mybatis\mapper\SelectMapper.class
+com\liyouxiu\mybatis\utils\SqlSessionUtil.class
+com\liyouxiu\mybatis\mapper\SelectSQLMapper.class
+com\liyouxiu\mybatis\mapper\UserMapper.class
+com\liyouxiu\mybatis\pojo\User.class

@@ -38,4 +38,14 @@ public interface UserMapper {
      */
     User checkLoginByParam(@Param("username") String username, @Param("password") String password);
 
+    /*
+    添加用户个人编写
+     */
+    void insertUserdemo(User user);
+
+    /**
+     * 根据ID查询用户信息
+     */
+    User getUserById(@Param("id") int id );
+
 }

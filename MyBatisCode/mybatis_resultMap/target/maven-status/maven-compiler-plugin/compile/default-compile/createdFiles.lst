@@ -1,0 +1,4 @@
+com\liyouxiu\mybatis\mapper\EmpMapper.class
+com\liyouxiu\mybatis\utils\SqlSessionUtil.class
+com\liyouxiu\mybatis\pojo\Emp.class
+com\liyouxiu\mybatis\pojo\Dept.class

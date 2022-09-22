@@ -29,4 +29,14 @@
     <select id="checkLoginByParam" resultType="User">
         select * from t_user where username= #{username} and password = #{password}
     </select>
+
+    <!--    void insertUserdemo();-->
+    <insert id="insertUserdemo">
+        insert into t_user value (null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+
+    <!--  User getUserById(@Param("id") int id );  -->
+    <select id="getUserById" resultType="User">
+        select * from t_user where id=#{id}
+    </select>
 </mapper>
