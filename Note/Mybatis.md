@@ -1027,3 +1027,210 @@ column：设置映射关系中表中的字段名
 >
 > 查询员工信息以及员工所对应的部门信息
 
+### 8.2.1、级联方式处理映射关系
+
+~~~xml
+<!--
+        处理多对一的映射关系
+        1.级联
+        -->
+    <resultMap id="empAndDeptResultMap" type="Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <result column="dept_id" property="dept.deptId"></result>
+        <result column="dept_name" property="dept.deptName"></result>
+    </resultMap>
+    <!--    Emp getEmpAndDeptByEmpId(@Param("empId") Integer empId);-->
+    <select id="getEmpAndDeptByEmpId" resultMap="empAndDeptResultMap">
+        select
+               t_emp.*,dept.dept_name
+        from
+             t_emp left join dept
+                 on t_emp.dept_id=dept.dept_id
+        where t_emp.emp_id=#{empId}
+    </select>
+~~~
+
+### 8.2.2、使用association处理映射关系
+
+~~~xml
+ <!--    association处理多对一的映射关系（处理的是实体类类型的属性
+            property:设置需要处理关系的属性名
+            javaType：设置要处理的属性类型
+      -->
+    <resultMap id="empAndDeptResultMap" type="Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <association property="dept" javaType="Dept" >
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+    <!--    Emp getEmpAndDeptByEmpId(@Param("empId") Integer empId);-->
+    <select id="getEmpAndDeptByEmpId" resultMap="empAndDeptResultMap">
+        select
+               t_emp.*,dept.dept_name
+        from
+             t_emp left join dept
+                 on t_emp.dept_id=dept.dept_id
+        where t_emp.emp_id=#{empId}
+    </select>
+~~~
+
+### 8.2.3、分步查询
+
+**①查询员工信息**
+
+~~~java
+/**
+     * 查询员工和所对应的部门信息第一步
+     * 查询员工信息
+     * @param empId
+     * @return
+     */
+    Emp getEmpAndDeptByStepOne(@Param("empId") Integer empId);
+~~~
+
+~~~xml
+<resultMap id="getEmpAndDeptByStepResultMap" type="Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <!--
+        select：设置分步查询，查询某个属性的值的sql的标识（namespace.sqlId） 
+        column：将sql以及查询结果中的某个字段设置为分步查询的条件 
+        -->
+        <association property="dept"
+                     select="com.liyouxiu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
+                     column="dept_id">
+
+        </association>
+    </resultMap>
+    <!--    Emp getEmpAndDeptByStepOne(@Param("empId") Integer empId);-->
+    <select id="getEmpAndDeptByStepOne" resultMap="getEmpAndDeptByStepResultMap">
+        select * from t_emp where emp_id=#{empId}
+    </select>
+~~~
+
+**②根据员工所对应的部门id查询部门信息**
+
+~~~java
+ /**
+     * 查询员工和所对应的部门信息第二步
+     * 查询部门信息
+     * @return
+     */
+    Dept getEmpAndDeptByStepTwo(@Param("deptId")Integer deptId);
+~~~
+
+~~~xml
+<!--    Dept getEmpAndDeptByStepTwo(@Param("deptId")Integer deptId);-->
+    <select id="getEmpAndDeptByStepTwo" resultType="Dept">
+        select * from dept where dept_id=#{deptId}
+    </select>
+~~~
+
+> 分步查询的优点：可以实现延迟加载
+>
+> 但是必须在核心配置文件中设置全局配置信息：
+>
+> lazyLoadingEnabled：延迟加载的全局开关。当开启时，所有关联对象都会延迟加载
+>
+> aggressiveLazyLoading：当开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载
+>
+> 此时就可以实现按需加载，获取的数据是什么，就只会执行相应的sql。此时可通过association和
+>
+> collection中的fetchType属性设置当前的分步查询是否使用延迟加载， fetchType="lazy(延迟加
+>
+> 载)|eager(立即加载)"
+
+## 8.3、一对多映射处理
+
+### 8.3.1、collection
+
+~~~java
+/**
+     * 查询部门以及部门中的员工信息
+     * @param deptId
+     * @return
+     */
+    Dept getDeptAndEmpByDeptId(@Param("deptId") Integer deptId);
+~~~
+
+~~~xml
+<resultMap id="deptAndEmpResult" type="Dept">
+        <id column="dept_id" property="deptId"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="emps" ofType="Emp">
+            <!--ofType：设置集合类型的属性存储的数据类型           -->
+            <id column="emp_id" property="empId"></id>
+            <result column="emp_name" property="empName"></result>
+            <result column="age" property="age"></result>
+            <result column="gender" property="gender"></result>
+        </collection>
+    </resultMap>
+    <!--Dept getDeptAndEmpByDeptId(@Param("deptId") Integer deptId);    -->
+    <select id="getDeptAndEmpByDeptId" resultMap="deptAndEmpResult">
+        select
+               *
+        from
+             dept left join t_emp
+            on dept.dept_id = t_emp.dept_id
+        where
+              dept.dept_id=#{deptId}
+    </select>
+~~~
+
+### 8.3.2、分步查询
+
+**①查询部门信息**
+
+~~~java
+/**
+     * 通过分步查询部门以及部门中的员工信息的第一步
+     * @param deptId
+     * @return
+     */
+    Dept getDeptAndEmpByStepOne(@Param("deptId") Integer deptId);
+~~~
+
+~~~xml
+<resultMap id="deptAndEmpResultMapByStep" type="dept">
+        <id column="dept_id" property="deptId"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="emps"
+                    select="com.liyouxiu.mybatis.mapper.EmpMapper.getDeptAndEmpByStepTwo"
+                    column="dept_id">
+
+        </collection>
+
+    </resultMap>
+    <!--    Dept getDeptAndEmpByStepOne(@Param("deptId") Integer deptId);-->
+    <select id="getDeptAndEmpByStepOne" resultMap="deptAndEmpResultMapByStep">
+        select *  from dept where dept_id=#{deptId}
+    </select>
+~~~
+
+**②根据部门查询部门中的所有员工id**
+
+~~~java
+/**
+     * 通过分步查询部门以及部门中的员工信息的第二步
+     * @param deptId
+     * @return
+     */
+    List<Emp> getDeptAndEmpByStepTwo(@Param("deptId") Integer deptId);
+~~~
+
+~~~xml
+<!--    List<Emp> getDeptAndEmpByStepTwo(@Param("deptId") Integer deptId);-->
+    <select id="getDeptAndEmpByStepTwo" resultType="Emp">
+        select * from t_emp where dept_id = #{deptId}
+    </select>
+~~~
+
