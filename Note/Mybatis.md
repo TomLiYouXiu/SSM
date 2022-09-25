@@ -1234,3 +1234,188 @@ column：设置映射关系中表中的字段名
     </select>
 ~~~
 
+# 9、动态SQL
+
+> Mybatis框架的动态SQL技术是一种根据特定条件动态拼装SQL语句的功能，它存在的意义是为了
+>
+> 解决 拼接SQL语句字符串时的痛点问题。
+
+## 9.1、if
+
+>  if标签可通过test属性的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；
+>
+> 反之标签中的内容不会执行
+
+~~~xml
+<!--
+        动态SQL：
+        1.if，通过test属性中的表达式判断标签是否有效（是否会拼接到SQL中）
+        -->
+    <!--        List<Emp> getEmpByCondition(Emp emp);-->
+    <select id="getEmpByCondition" resultType="Emp">
+        select * from t_emp where
+        <!--存放实体类的属性-->
+        <if test="empName != null and empName != ''">
+            emp_name=#{empName}
+        </if>
+        <if test="age != null and age != ''">
+            and age = #{age}
+        </if>
+        <if test="gender != null and gender != ''">
+            and gender = #{gender}
+        </if>
+    </select>
+~~~
+
+## 9.2、where
+
+> where和if一般结合使用：
+>
+> a>若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字
+>
+> b>若where标签中的if条件满足，则where标签会自动添加where关键字，并将条件最前方多余的and去掉
+>
+> 注意：where标签不能去掉条件最后多余的and
+
+~~~xml
+ <!--
+        动态SQL：
+        1.if，通过test属性中的表达式判断标签是否有效（是否会拼接到SQL中）
+        2.where
+            a.若where有if条件成立会自动生成where关键字
+            b.会自动将where标签中内容前的多余的app去掉
+            c.若where标签中没有任何一个条件成立，则where没有任何功能
+    -->
+<select id="getEmpByCondition" resultType="Emp">
+        select * from t_emp
+        <!--存放实体类的属性-->
+        <where>
+            <if test="empName != null and empName != ''">
+                emp_name=#{empName}
+            </if>
+            <if test="age != null and age != ''">
+                and age = #{age}
+            </if>
+            <if test="gender != null and gender != ''">
+                and gender = #{gender}
+            </if>
+        </where>
+    </select>
+~~~
+
+## 9.3、trim
+
+> trim用于去掉或添加标签中的内容
+>
+> 常用属性：
+>
+> prefix：在trim标签中的内容的前面添加某些内容
+>
+> prefixOverrides：在trim标签中的内容的前面去掉某些内容
+>
+> suffix：在trim标签中的内容的后面添加某些内容
+>
+> suffixOverrides：在trim标签中的内容的后面去掉某些内容
+
+~~~xml
+<!--
+        动态SQL：
+        1.if，通过test属性中的表达式判断标签是否有效（是否会拼接到SQL中）
+        2.where
+            a.若where有if条件成立会自动生成where关键字
+            b.会自动将where标签中内容前的多余的app去掉，内容后的and无法去掉
+            c.若where标签中没有任何一个条件成立，则where没有任何功能
+        3.trim
+            prefix：在trim标签中的内容的前面添加某些内容
+            prefixOverrides：在trim标签中的内容的前面去掉某些内容
+            suffix：在trim标签中的内容的后面添加某些内容
+            suffixOverrides：在trim标签中的内容的后面去掉某些内容
+    -->
+<select id="getEmpByCondition" resultType="Emp">
+        select * from t_emp
+        <!--存放实体类的属性-->
+        <trim prefix="where" suffixOverrides="and">
+            <if test="empName != null and empName != ''">
+                emp_name=#{empName} and
+            </if>
+            <if test="age != null and age != ''">
+                 age = #{age} and
+            </if>
+            <if test="gender != null and gender != ''">
+                 gender = #{gender}
+            </if>
+        </trim>
+~~~
+
+## 9.4、choose、when、otherwise
+
+> choose、when、 otherwise相当于if...else if..else
+
+~~~xml
+<!--    List<Emp> getEmpByChoose(Emp emp);-->
+    <select id="getEmpByChoose" resultType="Emp">
+        select * from t_emp
+        <where>
+            <choose>
+               <when test="empName != null and empName != ''">
+                   emp_name=#{empName}
+               </when>
+                <when test="age != null and age != ''">
+                    age = #{age}
+                </when>
+                <when test="gender != null and gender != ''">
+                    gender = #{gender}
+                </when>
+            </choose>
+        </where>
+    </select>
+~~~
+
+## 9.5、foreach
+
+**批量添加**
+
+~~~xml
+<!--void insertMoreEmp(@Param("emps") List<Emp> emps);-->
+    <insert id="insertMoreEmp">
+        insert into t_emp values
+        <!--collection 设置用来循环的数组-->
+        <!--item 设置用来循环的内容-->
+        <!--separator 设置分割符-->
+        <foreach collection="emps" item="emp" separator=",">
+           (null,#{emp.empName},#{emp.age},#{emp.gender},null)
+        </foreach>
+    </insert>
+~~~
+
+**批量删除**
+
+~~~xml
+<!--    void deleteMoreEmp(@Param("empIds") Integer[] empIds);-->
+    <delete id="deleteMoreEmp" >
+        <!--open 设置开始符号-->
+        <!--close 设置结束符号-->
+<!--        delete from t_emp where emp_id in-->
+<!--            <foreach collection="empIds" item="empId" separator="," open="(" close=")">-->
+<!--                #{empId}-->
+<!--            </foreach>-->
+        delete from t_emp where
+            <foreach collection="empIds" item="empId" separator="or">
+                emp_id= #{empId}
+            </foreach>
+        </delete>
+~~~
+
+## 9.6、SQL片段
+
+> sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入
+
+~~~xml
+<--! 定义-->
+    <sql id="empColumns">
+        emp_id,emp_name,age,gender,dept_id
+    </sql>
+<--! 引用-->
+     select <include refid="empColumns"></include> from t_emp
+~~~
+
