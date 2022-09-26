@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="studentOne" class="com.liyouxiu.spring.pojo.Student"></bean>
+
+    <!--
+        property：通过成员变量的set方法进行赋值
+        name：设置需要的赋值的属性名
+        value：设置为属性所赋的值
+     -->
+    <bean id="studentTwo" class="com.liyouxiu.spring.pojo.Student">
+        <property name="sid" value="1"></property>
+        <property name="sname" value="李四"></property>
+        <property name="age" value="23"></property>
+        <property name="gender" value="男"></property>
+    </bean>
+
+    <bean id="studentThree" class="com.liyouxiu.spring.pojo.Student">
+        <constructor-arg value="2"></constructor-arg>
+        <constructor-arg value="王五"></constructor-arg>
+        <constructor-arg value="24"></constructor-arg>
+        <constructor-arg value="男"></constructor-arg>
+    </bean>
+
+</beans>
