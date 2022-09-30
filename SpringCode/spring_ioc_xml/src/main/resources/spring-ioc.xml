@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="studentOne" class="com.liyouxiu.spring.pojo.Student"></bean>
 
@@ -22,6 +23,105 @@
         <constructor-arg value="王五"></constructor-arg>
         <constructor-arg value="24"></constructor-arg>
         <constructor-arg value="男"></constructor-arg>
+    </bean>
+
+    <bean id="studentFour" class="com.liyouxiu.spring.pojo.Student">
+        <property name="sid" value="3"></property>
+<!--        <property name="sname" value="&lt;赵六&gt;"></property>-->
+        <!-- 解决方案二：使用CDATA节 -->
+        <!-- CDATA中的C代表Character，是文本、字符的含义，CDATA就表示纯文本数据 -->
+        <!-- XML解析器看到CDATA节就知道这里是纯文本，就不会当作XML标签或属性来解析 -->
+        <!-- 所以CDATA节中写什么符号都随意 -->
+        <property name="sname" >
+            <value><![CDATA[<赵六>]]></value>
+        </property>
+        <property name="age" value="23"></property>
+        <property name="gender">
+            <null></null>
+        </property>
+    </bean>
+
+
+    <!--配置一个集合类型的bean，需要使用util的约束    -->
+    <util:list id="studentList">
+        <ref bean="studentFive"></ref>
+        <ref bean="studentFour"></ref>
+        <ref bean="studentThree"></ref>
+    </util:list>
+    <bean name="clazzOne" class="com.liyouxiu.spring.pojo.Clazz">
+        <property name="cid" value="001"></property>
+        <property name="cname" value="计算机科学与技术一班"></property>
+
+<!--        <property name="students">-->
+<!--            <list>-->
+<!--                <ref bean="studentFive"></ref>-->
+<!--                <ref bean="studentFour"></ref>-->
+<!--                <ref bean="studentThree"></ref>-->
+<!--            </list>-->
+<!--        </property>-->
+        <property name="students" ref="studentList"></property>
+    </bean>
+    <bean name="studentFive" class="com.liyouxiu.spring.pojo.Student">
+        <property name="sid" value="4"></property>
+        <property name="sname" value="马七"></property>
+        <property name="age" value="23"></property>
+        <property name="gender" value="男"></property>
+<!--        &lt;!&ndash;ref:引用IOC容器中的某个bean的id        &ndash;&gt;-->
+<!--        <property name="clazz" ref="clazzOne"></property>-->
+<!--        &lt;!&ndash;级联的方式，要保证提前为clazz属性赋值或者实例化        &ndash;&gt;-->
+<!--        <property name="clazz.cid" value="101"></property>-->
+<!--        <property name="clazz.cname" value="数字媒体一班"></property>-->
+        <property name="clazz">
+            <!--内部bean只能在当前的内部使用，不能通过IOC容器获取            -->
+            <bean id="clazzInner" class="com.liyouxiu.spring.pojo.Clazz">
+                <property name="cname" value="土木工程一班"></property>
+                <property name="cid" value="301"></property>
+            </bean>
+        </property>
+        <property name="hobby">
+            <array>
+                <value>抽烟</value>
+                <value>喝酒</value>
+                <value>烫头</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="teacherOne" class="com.liyouxiu.spring.pojo.Teacher">
+        <property name="tid" value="5001"></property>
+        <property name="tname" value="杰伦"></property>
+    </bean>
+    <bean id="teacherTwo" class="com.liyouxiu.spring.pojo.Teacher">
+        <property name="tid" value="5002"></property>
+        <property name="tname" value="学友"></property>
+    </bean>
+    <util:map id="teacherMap">
+        <entry key="数学老师" value-ref="teacherOne"></entry>
+        <entry key="英语老师" value-ref="teacherTwo"></entry>
+    </util:map>
+    <bean name="studentSix" class="com.liyouxiu.spring.pojo.Student">
+        <property name="sid" value="4"></property>
+        <property name="sname" value="马八"></property>
+        <property name="age" value="23"></property>
+        <property name="gender" value="男"></property>
+        <property name="hobby">
+            <array>
+                <value>抽烟</value>
+                <value>喝酒</value>
+                <value>烫头</value>
+            </array>
+        </property>
+        <property name="teacherMap" ref="teacherMap"></property>
+<!--        <property name="teacherMap" >-->
+<!--            <map>-->
+<!--                <entry key="数学老师" value-ref="teacherOne"></entry>-->
+<!--                <entry key="英语老师" value-ref="teacherTwo"></entry>-->
+<!--            </map>-->
+<!--        </property>-->
+    </bean>
+
+    <bean id="studentSeven" class="com.liyouxiu.spring.pojo.Student"
+          p:sid="008" p:sname="小黑"  p:teacherMap-ref="teacherMap">
     </bean>
 
 </beans>

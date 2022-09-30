@@ -1,5 +1,8 @@
 package com.liyouxiu.spring.pojo;
 
+import java.util.Arrays;
+import java.util.Map;
+
 /**
  * @author liyouxiu
  * @date 2022/9/26 18:54
@@ -12,6 +15,12 @@ public class Student {
     private Integer age;
 
     private String gender;
+
+    private Clazz clazz;
+
+    private String[] hobby;
+
+    private Map<String, Teacher> teacherMap;
 
     public Student() {
     }
@@ -55,6 +64,30 @@ public class Student {
         this.gender = gender;
     }
 
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
+
+    public String[] getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String[] hobby) {
+        this.hobby = hobby;
+    }
+
+    public Map<String, Teacher> getTeacherMap() {
+        return teacherMap;
+    }
+
+    public void setTeacherMap(Map<String, Teacher> teacherMap) {
+        this.teacherMap = teacherMap;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -62,6 +95,9 @@ public class Student {
                 ", sname='" + sname + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+                ", clazz=" + clazz +
+                ", hobby=" + Arrays.toString(hobby) +
+                ", teacherMap=" + teacherMap +
                 '}';
     }
 }
