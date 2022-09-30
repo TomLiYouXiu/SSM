@@ -1348,3 +1348,251 @@ public class AutoWireByXMLTest {
 }
 ~~~
 
+## 2.3、基于注解管理bean
+
+### 2.3.1、实验一：标记与扫描
+
+**①注解**
+
+和 XML 配置文件一样，注解本身并不能执行，注解本身仅仅只是做一个标记，具体的功能是框架检测到注解标记的位置，然后针对这个位置按照注解标记的功能来执行具体操作。
+
+本质上：所有一切的操作都是Java代码来完成的，XML和注解只是告诉框架中的Java代码如何执行。
+
+举例：元旦联欢会要布置教室，蓝色的地方贴上元旦快乐四个字，红色的地方贴上拉花，黄色的地方贴上气球。
+
+![](https://pic1.imgdb.cn/item/6336a4cd16f2c2beb174c1dc.jpg)
+
+班长做了所有标记，同学们来完成具体工作。墙上的标记相当于我们在代码中使用的注解，后面同学们做的工作，相当于框架的具体操作。
+
+**②扫描**
+
+Spring 为了知道程序员在哪些地方标记了什么注解，就需要通过扫描的方式，来进行检测。然后根据注解进行后续操作。
+
+**③新建Maven Module**
+
+~~~xml
+<dependencies>
+    <!-- 基于Maven依赖传递性，导入spring-context依赖即可导入当前所需所有jar包 -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.3.1</version>
+    </dependency>
+    <!-- junit测试 -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies> 
+~~~
+
+**④创建Spring配置文件**
+
+**⑤标识组件的常用注解**
+
+> @Component：将类标识为普通组件 
+>
+> @Controller：将类标识为控制层组件 
+>
+> @Service：将类标识为业务层组件 
+>
+> @Repository：将类标识为持久层组件
+
+问：以上四个注解有什么关系和区别？
+
+![](https://pic1.imgdb.cn/item/6336ee7116f2c2beb1c0447f.jpg)
+
+通过查看源码我们得知，@Controller、@Service、@Repository这三个注解只是在@Component注解的基础上起了三个新的名字。
+
+对于Spring使用IOC容器管理这些组件来说没有区别。所以@Controller、@Service、@Repository这三个注解只是给开发人员看的，让我们能够便于分辨组件的作用。
+
+注意：虽然它们本质上一样，但是为了代码的可读性，为了程序结构严谨我们肯定不能随便胡乱标记。
+
+**⑥创建组件**
+
+创建控制层组件
+
+~~~java
+package com.liyouxiu.spring.controller;
+
+import org.springframework.stereotype.Controller;
+
+/**
+ * @author liyouxiu
+ * @date 2022/9/30 21:12
+ */
+@Controller
+public class UserController {
+}
+
+~~~
+
+创建接口UserService
+
+~~~java
+package com.liyouxiu.spring.service;
+
+/**
+ * @author liyouxiu
+ * @date 2022/9/30 21:13
+ */
+public interface UserService {
+}
+
+~~~
+
+创建业务层组件UserServiceImp
+
+~~~java
+package com.liyouxiu.spring.service.impl;
+
+import com.liyouxiu.spring.service.UserService;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author liyouxiu
+ * @date 2022/9/30 21:14
+ */
+@Service
+public class UserServiceImpl implements UserService {
+
+}
+
+~~~
+
+创建接口UserDao
+
+~~~java
+package com.liyouxiu.spring.dao;
+
+/**
+ * @author liyouxiu
+ * @date 2022/9/30 21:17
+ */
+public interface UserDao {
+}
+
+~~~
+
+创建持久层组件UserDaoImpl
+
+~~~java
+package com.liyouxiu.spring.dao.impl;
+
+import com.liyouxiu.spring.dao.UserDao;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @author liyouxiu
+ * @date 2022/9/30 21:18
+ */
+@Repository
+public class UserDaoImpl implements UserDao {
+}
+~~~
+
+**⑦扫描组件**
+
+情况一：最基本的扫描方式
+
+~~~xml
+ <!--扫描组件    -->
+    <context:component-scan
+            base-package="com.liyouxiu.spring">
+
+    </context:component-scan>
+~~~
+
+情况二：指定要排除的组件
+
+~~~xml
+    <!--
+            context:exclude-filter：排除扫描
+            type：设置排除扫描的方式
+            type=“annotation|assignable”
+            annotation：根据注解的类型进行排除，expression需要设置排除的注解的全类名
+            assignable：根据类的类型进行排除，expression需要设置排除的类的全类名
+
+
+    -->
+    <!--扫描组件    -->
+    <context:component-scan base-package="com.liyouxiu.spring" use-default-filters="false">
+<!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+<!--        <context:exclude-filter type="assignable" expression="com.liyouxiu.spring.controller.UserController"/>-->
+        
+    </context:component-scan>
+~~~
+
+情况三：仅扫描指定组件
+
+~~~xml
+<!--
+            context:include-filter:包含扫描
+            注意：需要在context:component-scan标签中设置use-default-filters="false“
+            use-default-filters="true“（默认） 所设置的包下所有的类都需要扫描，此时可以使用排除扫描
+            use-default-filters="false" 所设置的包下所有的类都不需要扫描，此时可以使用包含扫描
+    -->
+    <!--扫描组件    -->
+    <context:component-scan base-package="com.liyouxiu.spring" use-default-filters="false">
+<!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+<!--        <context:exclude-filter type="assignable" expression="com.liyouxiu.spring.controller.UserController"/>-->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+~~~
+
+**⑧测试**
+
+~~~java
+package com.liyouxiu.test;
+
+import com.liyouxiu.spring.controller.UserController;
+import com.liyouxiu.spring.dao.UserDao;
+import com.liyouxiu.spring.service.UserService;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * @author liyouxiu
+ * @date 2022/9/30 21:21
+ */
+public class IOCByAnntionTest {
+    /**
+     *@Component：将类标识为普通组件
+     *
+     * @Controller：将类标识为控制层组件
+     *
+     * @Service：将类标识为业务层组件
+     *
+     * @Repository：将类标识为持久层组件
+     */
+    @Test
+    public void test(){
+        ApplicationContext ioc=new ClassPathXmlApplicationContext("spring-ioc-annotation.xml");
+        UserController userController = ioc.getBean(UserController.class);
+        System.out.println(userController);
+//        UserService userService = ioc.getBean(UserService.class);
+//        System.out.println(userService);
+//        UserDao userDao = ioc.getBean(UserDao.class);
+//        System.out.println(userDao);
+
+    }
+}
+
+~~~
+
+**⑨组件所对应的bean的id**
+
+在我们使用XML方式管理bean的时候，每个bean都有一个唯一标识，便于在其他地方引用。现在使用注解后，每个组件仍然应该有一个唯一标识。
+
+> 默认情况
+>
+> 类名首字母小写就是bean的id。例如：UserController类对应的bean的id就是userController。
+>
+> 自定义bean的id可通过标识组件的注解的value属性设置自定义的bean的id
+>
+> @Service("userService")//默认为userServiceImpl public class UserServiceImpl implements
+>
+> UserService {}
