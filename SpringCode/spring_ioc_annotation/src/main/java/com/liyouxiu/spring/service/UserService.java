@@ -5,4 +5,9 @@ package com.liyouxiu.spring.service;
  * @date 2022/9/30 21:13
  */
 public interface UserService {
+
+    /**
+     * 保存用户信息
+     */
+    void saveUser();
 }
