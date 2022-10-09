@@ -1,10 +1,7 @@
 package com.liyouxiu.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author liyouxiu
@@ -61,9 +58,9 @@ public class TestRequestMappingController {
         return "success";
     }
 
-    @RequestMapping("/test/rest/1")
-    public String testRest(){
-
+    @RequestMapping("/test/rest/{username}/{id}")
+    public String testRest(@PathVariable("id") Integer id,@PathVariable("username") String username){
+        System.out.println("id:"+id+",username:"+username);
         return "success";
     }
 }

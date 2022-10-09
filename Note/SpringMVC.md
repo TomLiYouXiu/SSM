@@ -633,3 +633,469 @@ rest方式：/user/delete/1
 
 SpringMVC路径中的占位符常用于RESTful风格中，当请求路径中将某些数据通过路径的方式传输到服务器中，就可以在相应的@RequestMapping注解的value属性中通过占位符{xxx}表示传输的数据，在通过@PathVariable注解，将占位符所表示的数据赋值给控制器方法的形参
 
+~~~java
+@RequestMapping("/test/rest/{username}/{id}")
+    public String testRest(@PathVariable("id") Integer id,@PathVariable("username") String username){
+        System.out.println("id:"+id+",username:"+username);
+        return "success";
+    }
+~~~
+
+~~~html
+<a th:href="@{/test/rest/admin/1}">测试@RequestMapping注解value属性的占位符</a><br>
+~~~
+
+# 4、SpringMVC获取请求参数
+
+## 4.1、通过ServletAPI获取
+
+将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象
+
+~~~java
+package com.liyouxiu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author liyouxiu
+ * @date 2022/10/8 17:16
+ */
+@Controller
+public class TestParamController {
+
+    @RequestMapping("/param/servletAPI")
+    public String getParamByServletAPI(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        System.out.println("username:"+username+",password:"+password);
+        return "success";
+    }
+}
+
+~~~
+
+~~~html
+<form th:action="@{/param/servletAPI}" method="post">
+    用户名：<input type="text" name="username"><br>
+    密码：<input type="password" name="password"><br>
+   <input type="submit" value="登录"><br>
+</form>
+~~~
+
+## 4.2、通过控制器方法的形参获取请求参数
+
+在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，匹配到请求映射时，在DispatcherServlet中就会将请求参数赋值给相应的形参
+
+~~~java
+package com.liyouxiu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author liyouxiu
+ * @date 2022/10/8 17:16
+ *
+ * 获取请求参数的方式
+ * 1.通过servletAPI的方式获取
+ * 只需要在控制器方法的形参位置设置HttpServletRequest类型的形参
+ * 就可以在控制器方法中使用request对象获取请求参数
+ *
+ * 2.通过控制器方法的形参获取
+ * 只需要在控制器方法的形参位置，设置一个形参，形参的名字和请求参数的名字一直即可
+ */
+@Controller
+public class TestParamController {
+
+    @RequestMapping("/param/servletAPI")
+    public String getParamByServletAPI(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        System.out.println("username:"+username+",password:"+password);
+        return "success";
+    }
+
+    @RequestMapping("/param")
+    public String getParam(String username,String password){
+        System.out.println("username:"+username+",password:"+password);
+        return "success";
+    }
+}
+
+~~~
+
+~~~html
+<form th:action="@{/param}" method="post">
+    用户名：<input type="text" name="username"><br>
+    密码：<input type="password" name="password"><br>
+    <input type="submit" value="登录"><br>
+</form>
+~~~
+
+> 注：
+>
+> 若请求所传输的请求参数中有多个同名的请求参数，此时可以在控制器方法的形参中设置字符串
+>
+> 数组或者字符串类型的形参接收此请求参数
+>
+> 若使用字符串数组类型的形参，此参数的数组中包含了每一个数据
+>
+> 若使用字符串类型的形参，此参数的值为每个数据中间使用逗号拼接的结果
+
+## 4.3、@RequestParam
+
+@RequestParam是将请求参数和控制器方法的形参创建映射关系
+
+@RequestParam注解一共有三个属性：
+
+* value：指定为形参赋值的请求参数的参数名
+
+* required：设置是否必须传输此请求参数，默认值为true
+
+若设置为true时，则当前请求必须传输value所指定的请求参数，若没有传输该请求参数，且没有设置
+
+defaultValue属性，则页面报错400：Required String parameter 'xxx' is not present；若设置为
+
+false，则当前请求不是必须传输value所指定的请求参数，若没有传输，则注解所标识的形参的值为
+
+null
+
+* defaultValue：不管required属性值为true或false，当value所指定的请求参数没有传输或传输的值
+
+为""时，则使用默认值为形参赋值
+
+~~~java
+@RequestMapping("/param")
+    public String getParam(
+            @RequestParam(value = "userName",required = false,defaultValue = "hello") String username,
+                           String password
+    ){
+        System.out.println("username:"+username+",password:"+password);
+        return "success";
+    }
+~~~
+
+~~~html
+<form th:action="@{/param}" method="post">
+    用户名：<input type="text" name="userName"><br>
+    密码：<input type="password" name="password"><br>
+    <input type="submit" value="登录"><br>
+</form>
+~~~
+
+## 4.4、@RequestHeader
+
+@RequestHeader是将请求头信息和控制器方法的形参创建映射关系
+
+@RequestHeader注解一共有三个属性：value、required、defaultValue，用法同@RequestParam
+
+~~~java
+ @RequestMapping("/param")
+    public String getParam(
+            @RequestParam(value = "userName",required = false,defaultValue = "hello") String username,
+                           String password,
+            @RequestHeader("referer") String referer
+    ){
+        System.out.println("username:"+username+",password:"+password+referer);
+        return "success";
+    }
+~~~
+
+## 4.5、@CookieValue
+
+@CookieValue是将cookie数据和控制器方法的形参创建映射关系
+
+@CookieValue注解一共有三个属性：value、required、defaultValue，用法同@RequestParam
+
+~~~java
+@RequestMapping("/param")
+    public String getParam(
+            @RequestParam(value = "userName",required = false,defaultValue = "hello") String username,
+                           String password,
+            @RequestHeader("referer") String referer,
+            //获取cookie
+            @CookieValue("JSESSIONID") String jsessionId
+    ){
+        System.out.println("jsessionId"+jsessionId);
+        System.out.println("username:"+username+",password:"+password+referer);
+        return "success";
+    }
+~~~
+
+## 4.6、通过POJO获取请求参数
+
+可以在控制器方法的形参位置设置一个实体类类型的形参，此时若浏览器传输的请求参数的参数名和实体类中的属性名一致，那么请求参数就会为此属性赋值
+
+**pojo**
+
+~~~java
+package com.liyouxiu.pojo;
+
+/**
+ * @author liyouxiu
+ * @date 2022/10/8 20:02
+ */
+public class User {
+
+    private Integer id;
+
+    private String username;
+
+    private String password;
+
+    public User(Integer id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+~~~
+
+~~~java
+@RequestMapping("/param/pojo")
+    public String getParamByPojo(User user){
+        System.out.println(user);
+        return "success";
+    }
+~~~
+
+## 4.7、解决获取请求参数的乱码问题
+
+解决获取请求参数的乱码问题，可以使用SpringMVC提供的编码过滤器CharacterEncodingFilter，但是必须在web.xml中进行注册
+
+~~~xml
+<!--配置springMVC的编码过滤器-->
+<filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>
+		org.springframework.web.filter.CharacterEncodingFilter
+    </filter-class>
+    <init-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+        <param-name>forceEncoding</param-name>
+        <param-value>true</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+~~~
+
+> 注：
+>
+> SpringMVC中处理编码的过滤器一定要配置到其他过滤器之前，否则无效
+
+# 5、域对象共享数据
+
+## 5.1、使用ServletAPI向request域对象共享数据
+
+~~~java
+@RequestMapping("/TestServletAPI")
+    public String TestServletAPI(HttpServletRequest request){
+        request.setAttribute("testScope","hello servletAPI");
+        return "success";
+    }
+~~~
+
+## 5.2、使用ModelAndView向request域对象共享数据
+
+~~~java
+package com.liyouxiu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * @author liyouxiu
+ * @date 2022/10/9 20:18
+ *
+ * 向域对象共享数据
+ * 1.通过ModelAndView向请求域共享数据
+ * 使用ModelAndView时，可以使用其Model功能向请求域共享数据
+ * 使用View功能设置逻辑视图，但是控制器方法一定要将ModelAndView作为方法的返回值
+ */
+@Controller
+public class TestScopeController {
+
+    @RequestMapping("/test/mav")
+    public ModelAndView testMav(){
+        /**
+         * ModelAndView包含Model和View的功能
+         * Model：向请求域中共享数据
+         * View：设置逻辑视图实现页面跳转
+         */
+        ModelAndView mav = new ModelAndView();
+        //想请求域中共享数据
+        mav.addObject("testRequestScope","Hello,ModelAndView");
+        //设置逻辑视图
+        mav.setViewName("success");
+        return mav;
+    }
+}
+
+~~~
+
+## 5.3、使用Model向request域对象共享数据
+
+~~~java
+@RequestMapping("/test/model")
+    public String testModel(Model model){
+        model.addAttribute("testRequestScope","Hello,Model");
+        return "success";
+    }
+~~~
+
+## 5.4、使用map向request域对象共享数据
+
+~~~java
+@RequestMapping("/test/map")
+    public String testMap(Map<String,Object> map){
+        map.put("testRequestScope","Hello,map");
+        return "success";
+    }
+~~~
+
+## 5.5、使用ModelMap向request域对象共享数据
+
+~~~java
+@RequestMapping("/test/modelmap")
+    public String testModelMap(ModelMap modelmap){
+        modelmap.addAttribute("testRequestScope","Hello,ModelMap");
+        return "success";
+    }
+~~~
+
+## 5.6、Model、ModelMap、Map的关系
+
+Model、ModelMap、Map类型的参数其实本质上都是 BindingAwareModelMap 类型的
+
+~~~java
+public interface Model{} 
+public class ModelMap extends LinkedHashMap<String, Object> {} 
+public class ExtendedModelMap extends ModelMap implements Model {} 
+public class BindingAwareModelMap extends ExtendedModelMap {}
+~~~
+
+## 5.7、向session域共享数据
+
+~~~java
+@RequestMapping("/test/session")
+    public String testSession(HttpSession session){
+        session.setAttribute("testSessionScope","Hello,Session");
+        return "success";
+    }
+~~~
+
+## 5.8、向application域共享数据
+
+~~~java
+@RequestMapping("/test/application")
+    public String testApplication(HttpSession session){
+        ServletContext servletContext = session.getServletContext();
+        servletContext.setAttribute("testApplicationScope","Hello,Application");
+        return "success";
+    }
+~~~
+
+# 6、SpringMVC的视图
+
+SpringMVC中的视图是View接口，视图的作用渲染数据，将模型Model中的数据展示给用户
+
+SpringMVC视图的种类很多，默认有转发视图和重定向视图
+
+当工程引入jstl的依赖，转发视图会自动转换为JstlView
+
+若使用的视图技术为Thymeleaf，在SpringMVC的配置文件中配置了Thymeleaf的视图解析器，由此视图解析器解析之后所得到的是ThymeleafView
+
+**6.1****、****ThymeleafView**
+
+当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，视图名称拼接视图前缀和视图
+
+后缀所得到的最终路径，会通过转发的方式实现跳转
+
+![](https://pic1.imgdb.cn/item/6342d2c316f2c2beb1209276.jpg)
+
+**6.2****、转发视图**
+
+SpringMVC中默认的转发视图是InternalResourceView
+
+SpringMVC中创建转发视图的情况：
+
+当控制器方法中所设置的视图名称以"forward:"为前缀时，创建InternalResourceView视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀"forward:"去掉，剩余部分作为最终路径通过转发的方式实现跳转
+
+例如"forward:/"，"forward:/employee"
+
+![](https://pic1.imgdb.cn/item/6342d2f616f2c2beb121126d.jpg)
+
+**6.3****、重定向视图**
+
+SpringMVC中默认的重定向视图是RedirectView
+
+当控制器方法中所设置的视图名称以"redirect:"为前缀时，创建RedirectView视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀"redirect:"去掉，剩余部分作为最终路径通过重定向的方式实现跳转
+
+例如"redirect:/"，"redirect:/employee"
+
+> 注：
+>
+> 重定向视图在解析时，会先将redirect:前缀去掉，然后会判断剩余部分是否以/开头，若是则会自动拼接上下文路径
+
+**6.4****、视图控制器****view-controller**
+
+当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view
+
+controller标签进行表示
+
+> 注：
+>
+> 当SpringMVC中设置任何一个view-controller时，其他控制器中的请求映射将全部失效，此时需
+>
+> 要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签：
+>
+> <mvc:annotation-driven />
